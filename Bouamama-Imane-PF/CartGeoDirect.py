@@ -1,0 +1,220 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+
+import math
+import Conv
+import numpy as np
+import Rad
+
+class Ui_Form2(object):
+
+    def CartGeoD(self):
+
+        f = 1 / 293.46602
+        e_2 = 0.0068034876
+        a = 6378249.20
+
+        X = float(self.lineEdit_8.text())
+        Y = float(self.lineEdit_9.text())
+        Z = float(self.lineEdit_10.text())
+        """print(X,Y,Z)"""
+        r = math.sqrt(X ** 2 + Y ** 2 + Z ** 2)
+
+        mu = np.arctan((Z / (np.sqrt(X ** 2 + Y ** 2))) * ((1 - f) + ((a * e_2) / r)))
+        Long = np.arctan(Y / X) #logitude
+        Lat= np.arctan((Z * (1 - f) + e_2 * a * np.sin(mu) ** 3) / (
+                (1 - f) * (math.sqrt(X ** 2 + Y ** 2) - (e_2 * a * np.cos(mu) ** 3)))) #latitude
+        h = (math.sqrt(X ** 2 + Y ** 2)) * math.cos(Lat) + (Z * math.sin(Lat)) - a * math.sqrt(
+            1 - (e_2 * math.sin(Lat) ** 2))
+        (d1, m1, s1) = Conv.Convertion(Long)
+        (d2, m2, s2) = Conv.Convertion(Lat)
+        self.lineEdit.setText(str(d2))
+        self.lineEdit_2.setText(str(m2))
+        self.lineEdit_3.setText(str(s2))
+
+        self.lineEdit_4.setText(str(d1))
+        self.lineEdit_5.setText(str(m1))
+        self.lineEdit_6.setText(str(s1))
+
+        self.lineEdit_7.setText(str(h))
+    def setupUi(self, Form):
+        if not Form.objectName():
+            Form.setObjectName(u"Form")
+        Form.resize(733, 308)
+        Form.setStyleSheet(u"background-color: rgb(170, 170, 255);\n"
+"background-color: rgb(183, 184, 255);")
+        self.label = QLabel(Form)
+        self.label.setObjectName(u"label")
+        self.label.setGeometry(QRect(340, 60, 241, 41))
+        font = QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        self.label.setFont(font)
+        self.label.setStyleSheet(u"color: rgb(0, 0, 127);\n"
+"color: rgb(0, 0, 0);\n"
+"")
+        self.label_2 = QLabel(Form)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(299, 127, 71, 20))
+        font1 = QFont()
+        font1.setPointSize(10)
+        font1.setBold(False)
+        self.label_2.setFont(font1)
+        self.label_3 = QLabel(Form)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setGeometry(QRect(457, 130, 16, 16))
+
+        font2 = QFont()
+        font2.setPointSize(10)
+        self.label_3.setFont(font2)
+        self.label_4 = QLabel(Form)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setGeometry(QRect(533, 127, 20, 20))
+        self.label_4.setFont(font)
+        self.label_5 = QLabel(Form)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setGeometry(QRect(690, 130, 16, 16))
+        self.label_5.setFont(font)
+        self.pushButton = QPushButton(Form)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setGeometry(QRect(170, 250, 101, 41))
+        font3 = QFont()
+        font3.setPointSize(9)
+        font3.setBold(True)
+        self.pushButton.setFont(font3)
+        self.pushButton.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.label_17 = QLabel(Form)
+        self.label_17.setObjectName(u"label_17")
+        self.label_17.setGeometry(QRect(50, 10, 671, 41))
+        font4 = QFont()
+        font4.setPointSize(11)
+        font4.setBold(True)
+        self.label_17.setFont(font4)
+        self.label_17.setStyleSheet(u"color: rgb(170, 0, 0);\n"
+"color: rgb(0, 0, 127);")
+        self.label_23 = QLabel(Form)
+        self.label_23.setObjectName(u"label_23")
+        self.label_23.setGeometry(QRect(41, 124, 17, 16))
+        self.label_23.setFont(font1)
+        self.label_25 = QLabel(Form)
+        self.label_25.setObjectName(u"label_25")
+        self.label_25.setGeometry(QRect(42, 198, 16, 16))
+        self.label_25.setFont(font1)
+        self.label_24 = QLabel(Form)
+        self.label_24.setObjectName(u"label_24")
+        self.label_24.setGeometry(QRect(190, 124, 16, 16))
+        self.label_26 = QLabel(Form)
+        self.label_26.setObjectName(u"label_26")
+        self.label_26.setGeometry(QRect(41, 162, 17, 16))
+        self.label_26.setFont(font1)
+        self.lineEdit_8 = QLineEdit(Form)
+        self.lineEdit_8.setObjectName(u"lineEdit_8")
+        self.lineEdit_8.setGeometry(QRect(62, 124, 120, 19))
+        self.lineEdit_8.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.lineEdit_10 = QLineEdit(Form)
+        self.lineEdit_10.setObjectName(u"lineEdit_10")
+        self.lineEdit_10.setGeometry(QRect(62, 196, 120, 19))
+        self.lineEdit_10.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.lineEdit_9 = QLineEdit(Form)
+        self.lineEdit_9.setObjectName(u"lineEdit_9")
+        self.lineEdit_9.setGeometry(QRect(62, 160, 120, 19))
+        self.lineEdit_9.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.label_11 = QLabel(Form)
+        self.label_11.setObjectName(u"label_11")
+        self.label_11.setGeometry(QRect(457, 164, 16, 16))
+        self.label_11.setFont(font2)
+        self.label_13 = QLabel(Form)
+        self.label_13.setObjectName(u"label_13")
+        self.label_13.setGeometry(QRect(690, 165, 16, 16))
+        self.label_13.setFont(font)
+        self.label_12 = QLabel(Form)
+        self.label_12.setObjectName(u"label_12")
+        self.label_12.setGeometry(QRect(534, 164, 16, 16))
+        self.label_12.setFont(font)
+        self.lineEdit_6 = QLineEdit(Form)
+        self.lineEdit_6.setObjectName(u"lineEdit_6")
+        self.lineEdit_6.setGeometry(QRect(552, 128, 131, 19))
+        self.lineEdit_6.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.lineEdit_6.setReadOnly(True)
+        self.lineEdit_4 = QLineEdit(Form)
+        self.lineEdit_4.setObjectName(u"lineEdit_4")
+        self.lineEdit_4.setGeometry(QRect(398, 164, 57, 19))
+        self.lineEdit_4.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.lineEdit_2 = QLineEdit(Form)
+        self.lineEdit_2.setObjectName(u"lineEdit_2")
+        self.lineEdit_2.setGeometry(QRect(476, 128, 56, 19))
+        self.lineEdit_2.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.label_10 = QLabel(Form)
+        self.label_10.setObjectName(u"label_10")
+        self.label_10.setGeometry(QRect(297, 164, 81, 20))
+        self.label_10.setFont(font1)
+        self.lineEdit_3 = QLineEdit(Form)
+        self.lineEdit_3.setObjectName(u"lineEdit_3")
+        self.lineEdit_3.setGeometry(QRect(550, 160, 131, 19))
+        self.lineEdit_3.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.lineEdit_3.setReadOnly(True)
+        self.lineEdit_7 = QLineEdit(Form)
+        self.lineEdit_7.setObjectName(u"lineEdit_7")
+        self.lineEdit_7.setGeometry(QRect(398, 200, 80, 19))
+        self.lineEdit_7.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.lineEdit = QLineEdit(Form)
+        self.lineEdit.setObjectName(u"lineEdit")
+        self.lineEdit.setGeometry(QRect(398, 128, 57, 19))
+        self.lineEdit.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.lineEdit_5 = QLineEdit(Form)
+        self.lineEdit_5.setObjectName(u"lineEdit_5")
+        self.lineEdit_5.setGeometry(QRect(476, 164, 56, 19))
+        self.lineEdit_5.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.label_14 = QLabel(Form)
+        self.label_14.setObjectName(u"label_14")
+        self.label_14.setGeometry(QRect(298, 200, 71, 20))
+        self.label_14.setFont(font1)
+        self.label_15 = QLabel(Form)
+        self.label_15.setObjectName(u"label_15")
+        self.label_15.setGeometry(QRect(490, 202, 16, 16))
+        self.label_16 = QLabel(Form)
+        self.label_16.setObjectName(u"label_16")
+        self.label_16.setGeometry(QRect(30, 60, 241, 41))
+        self.label_16.setFont(font)
+        self.label_16.setStyleSheet(u"color: rgb(0, 0, 127);\n"
+"color: rgb(0, 0, 0);")
+
+        print("convert function")
+        self.pushButton.clicked.connect(self.CartGeoD)
+        self.retranslateUi(Form)
+        QMetaObject.connectSlotsByName(Form)
+    # setupUi
+
+    def retranslateUi(self, Form):
+        Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
+        self.label.setText(QCoreApplication.translate("Form", u"Coordonn\u00e9es geographiques ", None))
+        self.label_2.setText(QCoreApplication.translate("Form", u"Latitude (\u03c6)", None))
+        self.label_3.setText(QCoreApplication.translate("Form", u"\u00b0", None))
+        self.label_4.setText(QCoreApplication.translate("Form", u"'", None))
+        self.label_5.setText(QCoreApplication.translate("Form", u"\"", None))
+        self.pushButton.setText(QCoreApplication.translate("Form", u"Convertir", None))
+        self.label_17.setText(QCoreApplication.translate("Form", u"Transformation des coordonn\u00e9es cart\u00e9siennes  aux coordonn\u00e9es g\u00e9ographiques (Direct)", None))
+        self.label_23.setText(QCoreApplication.translate("Form", u"X ", None))
+        self.label_25.setText(QCoreApplication.translate("Form", u"Z", None))
+        self.label_24.setText("")
+        self.label_26.setText(QCoreApplication.translate("Form", u"Y ", None))
+        self.label_11.setText(QCoreApplication.translate("Form", u"\u00b0", None))
+        self.label_13.setText(QCoreApplication.translate("Form", u"\"", None))
+        self.label_12.setText(QCoreApplication.translate("Form", u"'", None))
+        self.label_10.setText(QCoreApplication.translate("Form", u"Longitude(\u03bb)", None))
+        self.label_14.setText(QCoreApplication.translate("Form", u"Hauteur(h)", None))
+        self.label_15.setText(QCoreApplication.translate("Form", u"m", None))
+        self.label_16.setText(QCoreApplication.translate("Form", u"Coordonn\u00e9es cart\u00e9siennes ", None))
+    # retranslateUi
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Form2= QtWidgets.QWidget()
+    ui = Ui_Form2()
+    ui.setupUi(Form2)
+    Form2.show()
+    sys.exit(app.exec_())
+
